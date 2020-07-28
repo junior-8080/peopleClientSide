@@ -1,0 +1,16 @@
+
+.card{
+    margin-top: 20px;
+    /* margin-bottom: 50px; */
+}
+.card-img-top{
+    border-radius: 50%;
+}
+.card-text > i{
+  color:blue;
+}
+
+.fa-edit{
+    color:blue;
+    cursor: pointer;
+}

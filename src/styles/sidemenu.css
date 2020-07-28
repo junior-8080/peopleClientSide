@@ -1,0 +1,9 @@
+/* .row-side{
+    background-color: blue;
+} */
+ul{
+    list-style: none;
+}
+.nav-link > i{
+    color:#ffffff;
+}

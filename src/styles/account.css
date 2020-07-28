@@ -1,0 +1,26 @@
+.table-col{
+    height:91vh;
+}
+.sidemenu-col{
+    background-color:rgb(221, 201, 201);
+    height: 91vh;
+
+}
+
+@media(max-width:670px) {
+    .sidemenu-col{
+        height: fit-content;
+    }
+    .newUser{
+        width:100%;
+        height:fit-content;
+        
+    }
+}
+.newUser{
+    width:80%;
+    margin:auto;
+}
+
+
+

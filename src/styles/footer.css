@@ -1,0 +1,21 @@
+.footer {
+    padding:10px 0px 10px 0px;
+    text-align: center;
+    color:#ffffff;
+    background-color: #202224;
+    margin-top: 100px;
+}
+.ilink{
+    text-decoration: none;
+    color:#ffffff;
+    margin:10px;
+}
+.footer > p{
+  font-size: small;
+}
+@media(max-width:670px){
+    .footer{
+        margin-top: 10px;
+        padding:7px;
+    }
+}

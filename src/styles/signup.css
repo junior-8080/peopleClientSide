@@ -1,0 +1,51 @@
+
+.column{
+    background-color:rgb(9, 9, 112);
+    padding:16px;
+
+}
+
+.form-signLogin{
+    font-size: small;
+    padding:20px;
+    background-color: #ffffff;
+    width:80%;
+    margin:auto;
+}
+
+Input::placeholder{
+    font-size: small;
+}
+option{
+    font-size: small;
+}
+.btn{
+    background-color:rgb(9, 9, 112);
+    color:#ffffff;
+    font-size: small;
+}
+.btn:hover{
+    background-color: #ffffff;
+    color:rgb(9, 9, 112);
+}
+.title{
+    text-align: center;
+    color:#ffffff;
+}
+.form-text{
+    width:80%;
+    margin:auto;
+    font-size: 14px;
+}
+
+.link:hover{
+    color:rgb(165, 165, 168);
+    text-decoration: none;
+    color:#ffffff;
+}
+.err-list {
+    padding:0px;
+}
+.label {
+    color:rgb(9, 9, 112)
+}

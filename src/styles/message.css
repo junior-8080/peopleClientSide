@@ -1,0 +1,21 @@
+.message-form {
+    width:80%;
+    padding:10px 0px 0px 32px;
+}
+.textArea{
+    height:200px;
+    box-shadow: 10px 10px 5px #aaaaaa;
+}
+
+.send-btn{
+    /* margin-left:%; */
+    margin:10px 0px 0px 72%;
+}
+.recepient-section{
+    box-shadow: 10px 10px 5px #aaaaaa;
+}
+@media(max-width:670px){
+    .message-form{
+        width:90%;
+    }
+}
