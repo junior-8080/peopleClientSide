@@ -7,6 +7,7 @@ import Tables from "./Table";
 import NewUser from "./NewUser";
 import AddPersonForm from "./AddPersonForm"
 import "../styles/account.css"
+import Search from "./Search";
 
 
 
@@ -17,6 +18,7 @@ class  Account extends Component {
         this.state = {
             modal:false,
             people:[],
+            filterText:"",
             username:"",
             name:"",
             email:"",
@@ -78,7 +80,7 @@ class  Account extends Component {
         fetch("/api/getAllPeople")
             .then(res => res.json())
             .then(result =>{
-                console.log(result)
+
                 if(result.msg === 'token expired'){
 
                     return window.location = '/'
@@ -116,7 +118,11 @@ class  Account extends Component {
                     <Col sm="12" md="10" className="table-col">
                         {
                             this.state.people.length !== 0 ?
-                            <Tables people = {this.state.people}  />
+                            <div>
+                                <Search filterText = {this.state.filterText}
+                                 handleChange ={this.handleChange} />
+                                <Tables people = {this.state.people} filterText={this.state.filterText} />
+                            </div>
                             : 
                             <NewUser toggle={this.toggle} />
                         }

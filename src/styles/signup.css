@@ -12,6 +12,10 @@
     width:80%;
     margin:auto;
 }
+.login{
+
+    margin-top:50px;
+}
 
 Input::placeholder{
     font-size: small;
@@ -30,6 +34,7 @@ option{
 }
 .title{
     text-align: center;
+    margin-top:20px;
     color:#ffffff;
 }
 .form-text{

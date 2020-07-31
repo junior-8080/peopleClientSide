@@ -4,39 +4,46 @@ import {Table} from "reactstrap"
 
 import "../styles/table.css"
 
-function Tables (props) {
-    let people = props.people.length !== 0?
-         props.people.map((person,index)=>{
-                return(
-                        <tr key={index}>
-                            <td>{index + 1}</td>
-                            <td>{person.person_name}</td>
-                            <td>{person.phonenumber}</td>
-                            <td>{person.email}</td>
-                            <td>{person.gender}</td>
-                            <td> <Link to={`/overview/${person.person_id}`}>View</Link></td>
-                        </tr>
-                )
-         })
-         : null
+
+
+function TableRow(props){
     return(
-            //Table
-            <Table  responsive hover>
-                <thead className="table-head">
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Number</th>
-                        <th>Email</th>
-                        <th>Gender</th>
-                    </tr>
-                </thead>
-                <tbody className="table-body">
-                    {people}
-                </tbody>
-            </Table>
-            
+        <tr>
+            <td>{props.person.person_name}</td>
+            <td>{props.person.phonenumber}</td>
+            <td>{props.person.email}</td>
+            <td>{props.person.gender}</td>
+            <td> <Link to={`/overview/${props.person.person_id}`}>View</Link></td>
+        </tr>
     )
 }
 
-export default Tables
+function Tables(props){
+ const rows = [];
+ let filterText = props.filterText;
+ let people = props.people;
+  
+    people.forEach((person) => {
+    if(person.person_name.indexOf(filterText) === -1 && person.email.indexOf(filterText) === -1 && person.phonenumber.indexOf(filterText) === -1 ) {
+        return
+    }
+    rows.push(
+        <TableRow person={person} key={person.person_id} />
+    )
+ })
+
+    return(
+        <Table responsive hover>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Number</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+        </Table>
+    )
+}
+export default Tables;

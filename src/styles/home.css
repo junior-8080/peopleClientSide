@@ -81,3 +81,15 @@
     }
     
 }
+.dntHaveAccount{
+    margin-left: 10%;
+    font-size: small;
+}
+
+.dntHaveAccount > a{
+    color:purple;
+}
+.dntHaveAccount > a:hover{
+    color:rgb(127, 127, 214);
+    text-decoration: none;
+}

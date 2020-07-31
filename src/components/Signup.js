@@ -91,7 +91,7 @@ class Signup extends Component {
                         handleChange = {this.handleChange}
                         handleSubmit = {this.handleSubmit}
                        />
-                            <FormText color="info" className="form-text">Have an account? <Link to="/signin" className="link">Login</Link></FormText>
+                            <FormText color="info" className="form-text">Have an account? <Link to="/" className="link">Login</Link></FormText>
                     </Col>
                 </Row>
             </Container>

@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
 .navbar{
     background-color: rgb(9, 9, 112);
+
 }
 
 .navbar-light .navbar-nav .nav-link {
