@@ -1,7 +1,5 @@
-import React,{Component} from "react"
-import {Link} from "react-router-dom"
-import {Container,Row,Col, Alert} from "reactstrap"
-import {Form,Button,FormGroup,Label,FormText,Input} from "reactstrap"
+import React from "react"
+import {Form,Button,FormGroup,Label,Input} from "reactstrap"
 
 function SigninForm(props){
     return(

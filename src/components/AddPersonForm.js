@@ -6,10 +6,9 @@ import "../styles/add.css"
 
 
 function AddPersonForm(props) {
-    console.log(props)
     
      return (
-         <Modal isOpen={props.modal} toggle={props.toggle}className="modal-container">
+         <Modal isOpen={props.modal} toggle={props.toggle} className="modal-container">
              {
                  props.url === 'overview'?
                  <ModalHeader toggle={props.toggle} style={{color:'rgb(9, 9, 112)'}}>
@@ -48,11 +47,11 @@ function AddPersonForm(props) {
                     <Col>
                         <FormGroup>
                         {/* <Label for="numberField">Gender:</Label> */}
-                        <Input type="select" name="gender" id="exampleSelect" value={props.gender} 
-                        onChange={props.handleChange}>
-                        <option value="male" >Male</option>
-                        <option value="female" >Female</option>
-                        </Input>
+                        <select name="gender" id="exampleSelect" value={props.gender} 
+                        onChange={props.handleChange} className="form-control">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        </select>
                      </FormGroup>
                     </Col>
                     <Col>

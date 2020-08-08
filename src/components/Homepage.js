@@ -1,6 +1,5 @@
 import React,{Component} from "react";
 import {Container,Row,Col,Alert} from "reactstrap";
-import Navbars from "../components/Navbar" ;
 import {Link} from "react-router-dom";
 import Footer from "./Footer";
 import SigninForm from "./Signin";

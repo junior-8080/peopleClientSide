@@ -1,5 +1,9 @@
 td{
     font-size: 14px;
+    font-weight: 600;
+}
+th{
+    text-transform: uppercase;
 }
 td > a {
     text-decoration: none;

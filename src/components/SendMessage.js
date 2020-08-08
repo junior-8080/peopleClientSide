@@ -4,6 +4,7 @@ import {Form,FormGroup,Input,Button} from "reactstrap";
 import Sidemenu from "./Sidemenu";
 import Navbars from "./Navbar";
 import Recepient from "./Recepient";
+import AddPersonForm from './AddPersonForm'
 
 import '../styles/message.css'
 
@@ -13,7 +14,18 @@ class SendMessage extends Component {
         this.state = {
             message:"",
             recepient:[],
-            people:[]
+            people:[],
+            filterText:"",
+            username:"",
+            name:"",
+            email:"",
+            gender:"male",
+            number:"",
+            location:"",
+            twitter:"",
+            instagram:"",
+            modal:false,
+            temp:""
         }
     }
      
@@ -22,10 +34,9 @@ class SendMessage extends Component {
             [event.target.name]:event.target.value
         })
     }
+
     handleChange1 = (event)=> {
-        this.setState({
-            [event.target.name]:[event.target.value]
-        })
+        
     }
 
     logout= () =>{
@@ -42,7 +53,6 @@ class SendMessage extends Component {
         fetch("/api/getAllPeople")
             .then(res => res.json())
             .then(result =>{
-                console.log(result)
                 if(result.msg === 'token expired'){
 
                     return window.location = '/'
@@ -52,7 +62,6 @@ class SendMessage extends Component {
                 })
             })
             .catch(err=>{
-            //    let errors =  convertArrayToObject(err,'errors')
                console.log(err)
             })
     }
@@ -81,18 +90,59 @@ class SendMessage extends Component {
         check = (event,number) => {
             let checked = event.target.checked;
             if(checked && this.state.recepient.length === 0){
-               return this.setState({
-                    recepient:[number]
-                })
+              this.setState((prevState) =>{
+                return{
+                    recepient:[...prevState.recepient,number]
+                }
+              })
             }
-            if(checked && this.state.recepient.length >= 1){
+            if(checked && this.state.recepient.length > 0){
               return this.setState((prevState)=>({recepient:[...prevState.recepient,number]}));
             }
-            if(!checked){
+            if(!checked && this.state.recepient.length !== 0 ){
+                const index =  this.state.recepient.indexOf(number);
                 this.setState({
-                    recepient:[]
+                    recepient:this.state.recepient.filter((_, i) => i !== index)
                 })
             }
+        }
+        toggle = () => {
+            this.setState({
+                modal:!this.state.modal
+            })
+         }
+        handleSubmit = (event) => {
+            event.preventDefault();
+            const data = {
+                name:this.state.name,
+                email:this.state.email,
+                number:this.state.number,
+                gender:this.state.gender,
+                location:this.state.location,
+                twitter:this.state.twitter,
+                instagram:this.state.instagram
+            }
+        
+            fetch('/api/addPerson',{
+                method:'POST',
+                headers:{
+                   'Content-Type':'application/json'
+                },
+                body:JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(result => {
+                 console.log(result)
+                 if(result.message){
+                    this.setState({
+                        modal:!this.state.modal
+                    })
+                     window.location ='/message'
+                     alert(result.message)
+                 }
+            })
+            .catch(err => console.log(err))
+                
         }
  
 
@@ -101,10 +151,10 @@ class SendMessage extends Component {
         return(
             //messaging form.
             <Container fluid={true}>
-                <Navbars  username={username} logout={this.logout}/>
+                <Navbars  username={username}   logout={this.logout}/>
                 <Row noGutters={true}>
                     <Col sm="12" md="2" className="sidemenu-col">
-                        <Sidemenu />
+                        <Sidemenu toggle = {this.toggle}/>
                     </Col>
                     <Col sm="12" md="7">
                         <MessageForm 
@@ -116,10 +166,24 @@ class SendMessage extends Component {
                         />
                     </Col>
                     <Col sm="12" md="3">
-                        <Recepient  recepient={this.state.people} check = {this.check}/>
+                        <Recepient 
+                         recepient={this.state.people} 
+                         handleChange = {this.handleChange}
+                         check = {this.check} />
                     </Col>
-                    
                 </Row>
+                <AddPersonForm toggle={this.toggle} 
+                modal={this.state.modal}
+                name={this.state.name}
+                email={this.state.email}
+                number={this.state.number}
+                gender={this.state.gender}
+                location={this.state.location}
+                twitter={this.state.twitter}
+                instagram={this.state.instagram}
+                handleChange={this.handleChange}
+                handleSubmit={this.handleSubmit}
+                />
             </Container>
         )
         
@@ -136,7 +200,7 @@ function MessageForm(props){
             </FormGroup>
             <FormGroup className="message-form">
                 <Label for="#recepientField">Recepients:</Label>
-                <Input type="textarea" name="recepient" id="recepientField" value={props.recepient}
+                <Input type="textarea"  id="recepientField" value={props.recepient}
                 onChange={props.handleChange1} className="textArea"></Input>
             </FormGroup>
             <Button className="send-btn" onClick={props.handleSend}>Send</Button>
