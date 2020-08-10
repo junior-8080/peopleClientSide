@@ -17,7 +17,7 @@ class Homepage extends Component{
         this.state = {
             email:"",
             password:"",
-            errors:[]
+            error:"",
         }
     }
 
@@ -62,7 +62,7 @@ class Homepage extends Component{
             if(result.errors){
                 // let errors = convertArrayToObject(result.errors,'msg')
                 return this.setState({
-                    errors:result.errors
+                    error:result.errors[0].msg
                 })
             }
         })  
@@ -71,30 +71,11 @@ class Homepage extends Component{
         })      
     }
     render(){
-        let errors = this.state.errors.length !== 0?
-         this.state.errors.map((error,index)=>{
-             return(
-                 <Alert>
-                     {
-                         error.msg
-                     }
-                 </Alert>
-             )
-         })
-         : null
         return(
             <Container fluid={true}>
-               { errors?
-                            <Alert>
-                            {
-                            errors
-                            }
-                        </Alert>
-                        : null
-                        }
               <Row noGutters={true} className="row-home">
                   <Col sm="12" md={{size:3,offset:1}} className="column1" >
-                      <div>
+                    <div>
                       <h1>Poeple Management And Messaging App</h1>
                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
@@ -111,7 +92,8 @@ class Homepage extends Component{
                      email = {this.state.email}
                      password = {this.state.password}
                      handleChange = {this.handleChange}
-                     handleSubmit = {this.handleSubmit}/>
+                     handleSubmit = {this.handleSubmit}
+                     error = {this.state.error}/>
                      <span className="dntHaveAccount">
                          Dont have an account...<Link to="/signup">Sign me up</Link>
                      </span>

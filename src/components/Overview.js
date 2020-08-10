@@ -3,10 +3,12 @@ import {Container,Row,Col} from "reactstrap"
 import {Card,CardBody,CardTitle,CardText,CardImg} from "reactstrap"
 import Navbars from './Navbar';
 import Sidemenu from "./Sidemenu"
-import image from "./people.jpg"
-import AddPersonForm from "./AddPersonForm"
+import image from "./profile2.svg"
+import AddPersonForm from "./AddPersonForm";
+import EditForm from "./EditFrom";
 
 import "../styles/overview.css"
+
 
 
 class Overview extends Component {
@@ -17,19 +19,7 @@ class Overview extends Component {
             id: props.match.params.id,
             modal:false,
             modal1:false,
-            name:"",
-            email:"",
-            gender:"male",
-            number:"",
-            location:"",
-            twitter:"",
-            instagram:""
         }
-    }
-    handleChange = (event) => {
-        this.setState({
-            [event.target.name] : event.target.value
-        })
     }
 
     logout= () =>{
@@ -41,7 +31,6 @@ class Overview extends Component {
             }
         })
     }
-
     componentDidMount(){
         fetch(`/api/getPerson/${this.state.id}`)  
             .then(res => res.json())
@@ -53,7 +42,6 @@ class Overview extends Component {
             })
             .catch(err => console.log(err))
     }
-
     componentWillReceiveProps (nextProps) {
         if (nextProps.match.params.id !== this.props.match.params.id) {
           fetch(`/api/getPerson/${nextProps.match.params.id}`)
@@ -68,105 +56,33 @@ class Overview extends Component {
         }
       }
 
+      toggle = () => {
+        this.setState({
+            modal:!this.state.modal
+        })
+     }
+
       toggle1 = () => {
         this.setState({
             modal1:!this.state.modal1
         })
      }
-
-      toggle = () => {
-        this.setState({
-            modal:!this.state.modal,
-            name:this.state.person.person_name,
-            email:this.state.person.email,
-            gender:this.state.person.gender,
-            number:this.state.person.phonenumber,
-            location:this.state.person.person_location,
-            twitter:this.state.person.twitter_acc,
-            instagram:this.state.person.ig_acc
-
-        })
-     }
-     
-      edit = () => {
-        const data = {
-            id:this.state.person.person_id,
-            name:this.state.name,
-            email:this.state.email,
-            number:this.state.number,
-            gender:this.state.gender,
-            location:this.state.location,
-            twitter:this.state.twitter,
-            instagram:this.state.instagram
-        }
-        fetch('/api/updatePerson',{
-            method:'PUT',
-            headers:{
-               'Content-Type':'application/json'
-            },
-            body:JSON.stringify(data)
-        })
-        .then(res => res.json())
-        .then(result => {
-            console.log(result)
-            if(result.message){
-                window.location =`/overview/${this.state.person.person_id}`
-                alert(result.message)
-            }
-        })
-      }
-
-      handleSubmit = (event) => {
-        event.preventDefault();
-        const data = {
-            name:this.state.name,
-            email:this.state.email,
-            number:this.state.number,
-            gender:this.state.gender,
-            location:this.state.location,
-            twitter:this.state.twitter,
-            instagram:this.state.instagram
-        }
-    
-        fetch('/api/addPerson',{
-            method:'POST',
-            headers:{
-               'Content-Type':'application/json'
-            },
-            body:JSON.stringify(data)
-        })
-        .then(res => res.json())
-        .then(result => {
-             console.log(result)
-             if(result.message){
-                this.setState({
-                    modal:!this.state.modal
-                })
-                 window.location ='/account'
-                 alert(result.message)
-             }
-        })
-        .catch(err => console.log(err))
-            
-    }
-
     render(){
         let username = JSON.parse(localStorage.getItem('profile')).username;
-        console.log(username)
         return(
            <Container fluid={true} className="overview">
                <Navbars username={username} logout={this.logout}/>
                <Row noGutters={true} className="over-row">
                  <Col sm="12" md="2" className="sidemenu-col">
-                 <Sidemenu toggle={this.toggle1}/>
+                 <Sidemenu toggle={this.toggle}/>
                  </Col>
                 <Col sm="12" md={{size:4,offset:3}} className="table-col">
                     <Card>
-                        <CardImg top width="100%" src={image} alt="card-image"  />
+                        <CardImg top width="200px" height="200px" src={image} alt="card-image"  />
                         {/* <hr /> */}
                         <CardBody>
                             <CardTitle>
-                               <i className="fa fa-edit" onClick={this.toggle}></i> {this.state.person.person_name}
+                               <i className="fa fa-edit" onClick={this.toggle1}></i> {this.state.person.person_name}
                             </CardTitle>
                          <Row>
                             <Col sm="12" md="6">
@@ -228,30 +144,25 @@ class Overview extends Component {
                          </Row>
                         </CardBody>
                     </Card>
-                    <AddPersonForm  toggle={this.toggle} modal={this.state.modal} 
-                    name={this.state.name}
-                    email={this.state.email}
-                    number={this.state.number}
-                    location={this.state.location}
-                    twitter={this.state.twitter}
-                    instagram={this.state.instagram}
-                    handleChange={this.handleChange}
-                    handleSubmit={this.handleSubmit}
-                    edit ={this.edit}
-                    url="overview"/>
+                    {
+                        this.state.modal?
+                        <AddPersonForm  
+                        toggle={this.toggle} 
+                        modal={this.state.modal} 
+                        />
+                        :null
 
-                    <AddPersonForm toggle={this.toggle1} 
+                    }
+                    
+                    {
+                    this.state.modal1?
+                    <EditForm toggle={this.toggle1} 
                         modal={this.state.modal1}
-                        name={this.state.name}
-                        email={this.state.email}
-                        number={this.state.number}
-                        gender={this.state.gender}
-                        location={this.state.location}
-                        twitter={this.state.twitter}
-                        instagram={this.state.instagram}
-                        handleChange={this.handleChange}
-                        handleSubmit={this.handleSubmit}
+                        person_id={this.state.person.person_id}
+                        person={this.state.person}
                      />
+                     :null
+                    }
                 </Col>
                </Row>
            </Container>

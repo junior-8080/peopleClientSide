@@ -7,25 +7,26 @@ import {Modal,ModalBody,ModalHeader,ModalFooter} from "reactstrap"
 import "../styles/add.css"
 
 
-function AddPersonForm(props) {
+function EditForm(props) {
     
     const  formik = useFormik({
         initialValues:{
-            pname:"",
-            email:"",
-            gender:"male",
-            number:"",
-            location:"",
-            twitter:"",
-            instagram:""
+            name:props.person.person_name,
+            email:props.person.email,
+            gender:props.person.gender,
+            number:props.person.phonenumber,
+            location:props.person.person_location,
+            twitter:props.person.twitter_acc,
+            instagram:props.person.ig_acc
         },
         validationSchema: Yup.object({
             name:Yup.string().max(15,'Must be 15 characters or less').required('Required'),
             email:Yup.string().email('Invalid Email Address').required("Required"),
             number:Yup.string().max(10,'Must be 10 characters').required('Required'),
         }),
-        onSubmit:values =>{
+        onSubmit:values => {
             const data = {
+                id:props.person.person_id,
                 name:values.name,
                 email:values.email,
                 number:values.number,
@@ -34,9 +35,8 @@ function AddPersonForm(props) {
                 twitter:values.twitter,
                 instagram:values.instagram
             }
-        
-            fetch('/api/addPerson',{
-                method:'POST',
+            fetch('/api/updatePerson',{
+                method:'PUT',
                 headers:{
                    'Content-Type':'application/json'
                 },
@@ -44,32 +44,27 @@ function AddPersonForm(props) {
             })
             .then(res => res.json())
             .then(result => {
-                 console.log(result)
-                 if(result.message){
-                    props.toggle();
-                     window.location ='/account'
-                     alert(result.message)
-                 }
+                console.log(result)
+                if(result.message){
+                    window.location =`/overview/${props.person_id}`
+                    alert(result.message)
+                }
             })
-            .catch(err => console.log(err))
-                
-        },
+        }
     })
-
+      console.log(formik.values)
      return (
          <Modal isOpen={props.modal} toggle={props.toggle} className="modal-container">
-        
                  <ModalHeader toggle={props.toggle} style={{color:'rgb(9, 9, 112)'}}>
-                    New Person
+                    Edit Person
                  </ModalHeader>
-             
              <ModalBody>
                 <Form className="form" onSubmit={formik.handleSubmit}>
                     <Row>
                     <Col md="6">
                     <FormGroup>
                         <Input type="text" name="name" id="nameField" placeholder="name" 
-                        value={props.name} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
+                        value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
                          {formik.touched.name && formik.errors.name?<div className="errors">{formik.errors.name}</div>: null}
 
                     </FormGroup>
@@ -117,12 +112,12 @@ function AddPersonForm(props) {
                 </Form>
              </ModalBody>
                     <ModalFooter>
-                         <Button  color="primary"  onClick={formik.handleSubmit} >Add</Button>
-                        <Button color="danger" onClick={props.toggle} className="cancel">Cancel</Button> 
+                        <Button  color="primary" onClick={formik.handleSubmit} >Edit</Button>
+                        <Button color="danger" onClick={props.toggle}>Cancel</Button> 
                     </ModalFooter>
          </Modal>
         
     )
 
 }
-export default AddPersonForm
+export default EditForm

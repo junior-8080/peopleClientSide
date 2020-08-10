@@ -12,6 +12,9 @@
     width:80%;
     margin:auto;
 }
+.signup >.form-group{
+    margin-bottom: 5px;
+}
 .login{
 
     margin-top:50px;
@@ -54,3 +57,10 @@ option{
 .label {
     color:rgb(9, 9, 112)
 }
+.errors{
+    font-size: small;
+    color:red;
+    margin:0px;
+    padding:0px;
+}
+

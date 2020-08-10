@@ -131,15 +131,6 @@ class  Account extends Component {
                 </Row>
                 <AddPersonForm toggle={this.toggle} 
                 modal={this.state.modal}
-                name={this.state.name}
-                email={this.state.email}
-                number={this.state.number}
-                gender={this.state.gender}
-                location={this.state.location}
-                twitter={this.state.twitter}
-                instagram={this.state.instagram}
-                handleChange={this.handleChange}
-                handleSubmit={this.handleSubmit}
                 />
             </Container>
         )

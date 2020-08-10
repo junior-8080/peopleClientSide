@@ -5,13 +5,16 @@ function SigninForm(props){
     return(
         <Form className="form-signLogin  login" onSubmit={props.handleSubmit}>
             <FormGroup>
-                <Label for="emailField">Email</Label>
+              <span className="errors">{props.error}</span>
+            </FormGroup>
+            <FormGroup>
+                <Label for="emailField" className="label">Email:</Label>
                 <Input type="email" name="email" id="emailField" placeholder="email"  
                 value={props.email} 
                 onChange={props.handleChange}/>
             </FormGroup>
             <FormGroup>
-                <Label for="passwordField">Password</Label>
+                <Label for="passwordField" className="label">Password:</Label>
                 <Input type="password"  name="password" id="passwordField" placeholder="password"
                  value={props.password} 
                  onChange={props.handleChange}
