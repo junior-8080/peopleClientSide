@@ -48,6 +48,7 @@ class Recepient extends Component{
                 width='100%'
                 />
                 <ul className="recepient">
+                <input type="checkbox"/><span className="recepient-list">Select All</span>
                     <RecepientRow 
                     filterText={this.state.filterText}
                     recepients = {this.props.recepient}

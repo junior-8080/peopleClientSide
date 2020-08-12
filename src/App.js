@@ -6,8 +6,9 @@ import Signup from "./components/Signup";
 import Signin  from "./components/Signin";
 import Account from "./components/Account";
 import Overview from "./components/Overview";
-import './App.css';
 import SendMessage from './components/SendMessage';
+import Reset from "./components/Reset";
+import './App.css';
 
 function App() {
   return(

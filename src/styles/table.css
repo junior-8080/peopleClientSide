@@ -12,6 +12,10 @@ td > a {
 td > a:hover{
     text-decoration: none;
 }
+tr{
+    margin-bottom: 2px;
+    border-left: 2px solid #000000;
+}
 .table-responsive{
     height:80vh;
     overflow-y: scroll; 
@@ -21,13 +25,16 @@ td > a:hover{
     margin:auto;
     margin-top: 10px;
     box-shadow: 10px 10px 5px #aaaaaa;
-    
 }
+table{
+    border-collapse: separate;
 
+}
 .table-body{
     overflow-y: scroll;
     height:70vh;
     padding-bottom: 100px;
+    border-spacing: 0.5rem;
 }
 
 .search {

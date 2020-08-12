@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import Footer from "./Footer";
 import SigninForm from "./Signin";
 import Logo from "./people.jpg";
+import Reset from './Reset'
 
 
 
@@ -18,6 +19,7 @@ class Homepage extends Component{
             email:"",
             password:"",
             error:"",
+            modal:false
         }
     }
 
@@ -26,6 +28,12 @@ class Homepage extends Component{
             [event.target.name] : event.target.value
         })
     }
+
+    toggle = () => {
+        this.setState({
+            modal:!this.state.modal
+        })
+     }
 
     handleSubmit = (event) => {
         event.preventDefault();
@@ -95,10 +103,14 @@ class Homepage extends Component{
                      handleSubmit = {this.handleSubmit}
                      error = {this.state.error}/>
                      <span className="dntHaveAccount">
-                         Dont have an account...<Link to="/signup">Sign me up</Link>
+                         Dont have an account...?<Link to="/signup">&nbsp;Sign me up</Link>
                      </span>
+                     <div>
+                         <span className="dntHaveAccount">Forgotton Password...?<Link onClick={this.toggle}>&nbsp;Reset</Link></span>
+                     </div>
                   </Col>
               </Row>
+              <Reset  toggle={this.toggle} modal={this.state.modal}/>
               <Footer />
             </Container>
         )

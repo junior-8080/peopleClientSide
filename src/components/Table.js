@@ -33,7 +33,7 @@ function Tables(props){
  })
 
     return(
-        <Table responsive hover>
+        <Table responsive>
             <thead>
                 <tr>
                     <th>Name</th>
