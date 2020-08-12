@@ -1,5 +1,6 @@
 import React,{useState} from "react"
 import {Collapse,Navbar,NavbarToggler,NavItem,NavLink, NavbarBrand,Nav} from "reactstrap";
+import  logo from './logo.svg'  
 import "../styles/navbar.css"
 
 
@@ -9,7 +10,7 @@ function Navbars(props){
     return(
         <div className="navs">
             <Navbar light expand="md" >
-                <NavbarBrand href="/"><i className="fa fa-users"></i></NavbarBrand>
+                <NavbarBrand href="/"><img className="logo" src={logo}  width="50px" height="50px"/></NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                    {

@@ -22,3 +22,9 @@
 .fa-users {
     font-size: 18px;
 }
+
+img.logo{
+    background-color: #ffffff;
+    padding:5px;
+    border-radius: 50%;
+}
