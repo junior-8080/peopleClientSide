@@ -21,8 +21,8 @@ function Reset(props) {
             const data = {
                 email:values.email,
             }
-            fetch('/api/updatePerson',{
-                method:'PUT',
+            fetch('/api/reset',{
+                method:'POST',
                 headers:{
                    'Content-Type':'application/json'
                 },
@@ -31,9 +31,8 @@ function Reset(props) {
             .then(res => res.json())
             .then(result => {
                 console.log(result)
-                if(result.message){
-                    window.location =`/overview/${props.person_id}`
-                    alert(result.message)
+                if(result.message === 'reset'){
+                    alert('check your email to reset password link');
                 }
             })
         }
@@ -59,7 +58,7 @@ function Reset(props) {
                 </Form>
             </ModalBody>
             <ModalFooter>
-                <Button>Submit</Button>
+                <Button onClick={formik.handleSubmit}>Submit</Button>
             </ModalFooter>
 
                
