@@ -36,7 +36,7 @@ function FormSignup() {
             email:Yup.string().email('Invalid Email Address').required("Required"),
             phonenumber:Yup.string().max(10,'Must be 10 characters').required('Required'),
             password:Yup.string().max(20,'Must be 20 characters or less').required('Required'),
-            confirmPassword:Yup.string().oneOf([Yup.ref('password'),null],"'Password must match").required('Require')
+            confirmPassword:Yup.string().oneOf([Yup.ref('password'),null],"'Password must match").required('Required')
         }),
         onSubmit: values => {
             const data = {username:values.username,
@@ -149,7 +149,7 @@ function FormSignup() {
               />
               {formik.touched.confirmPassword && formik.errors.confirmPassword?<div className="errors">{formik.errors.confirmPassword}</div>:null}
           </FormGroup>
-          <Button className="btn">Signup</Button>
+          <Button className="btn" onClick={formik.handleSubmit}>Signup</Button>
         </Form>
         <FormText color="info" className="form-text">Have an account? <Link to="/" className="link">Login</Link></FormText>
 

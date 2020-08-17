@@ -7,7 +7,7 @@ import Signin  from "./components/Signin";
 import Account from "./components/Account";
 import Overview from "./components/Overview";
 import SendMessage from './components/SendMessage';
-import Reset from "./components/Reset";
+import ResetForm from "./components/ResetForm";
 import './App.css';
 
 function App() {
@@ -19,7 +19,8 @@ function App() {
         <Route path = "/signin" component = {Signin} />
         <Route path = "/account" component = {Account}/>
         <Route path = "/overview/:id" component = {Overview} />
-        <Route path = "/message"  component = {SendMessage} />        
+        <Route path = "/message"  component = {SendMessage} />     
+        <Route path = "/reset/:secret"  component = {ResetForm} />    
       </Switch>
     </div>
   )

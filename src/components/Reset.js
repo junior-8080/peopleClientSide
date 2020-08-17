@@ -21,6 +21,7 @@ function Reset(props) {
             const data = {
                 email:values.email,
             }
+            props.toggle();
             fetch('/api/reset',{
                 method:'POST',
                 headers:{
