@@ -1,5 +1,6 @@
 import React from "react";
 import {Nav,NavItem,NavLink} from "reactstrap";
+import {Link}  from "react-router-dom";
 
 import "../styles/sidemenu.css"
 
@@ -16,10 +17,10 @@ function Sidemenu(props){
     return(
                 <Nav vertical>
                     <NavItem>
-                        <NavLink href="/" style={style1} ><i className="fa fa-home">&nbsp;Home</i></NavLink>
-                        <NavLink href="/account" style={style1}><i className="fa fa-user">&nbsp;AllPeople</i></NavLink>
-                        <NavLink href="#" onClick={props.toggle}  style={style1}><i className="fa fa-user">&nbsp;AddPerson</i></NavLink>
-                        <NavLink href="/message" style={style1}><i className="fa fa-envelope">&nbsp;Send Message</i></NavLink>
+                        <Link to="/" style={style1} className="nav-link" ><i className="fa fa-home">&nbsp;Home</i></Link>
+                        <Link to="/account" style={style1} className="nav-link"><i className="fa fa-user">&nbsp;AllPeople</i></Link>
+                        <Link to="#" onClick={props.toggle}  style={style1} className="nav-link"><i className="fa fa-user">&nbsp;AddPerson</i></Link>
+                        <Link to="/message" style={style1} className="nav-link"><i className="fa fa-envelope">&nbsp;Send Message</i></Link>
                     </NavItem>
                 </Nav>   
         

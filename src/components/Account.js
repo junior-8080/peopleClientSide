@@ -1,13 +1,22 @@
 import React,{Component} from "react"
 import {Container,Row,Col} from "reactstrap"
-
+import {connect} from 'react-redux'
 import Navbars from './Navbar';
 import Sidemenu from "./Sidemenu";
 import Tables from "./Table";
 import NewUser from "./NewUser";
 import AddPersonForm from "./AddPersonForm"
+import isLogged from '../action/isLogged';
+import {saveProfile} from '../action/saveProfile';
 import "../styles/account.css"
 import Search from "./Search";
+
+
+
+
+
+
+
 
 
 
@@ -90,7 +99,6 @@ class  Account extends Component {
                 })
             })
             .catch(err=>{
-            //    let errors =  convertArrayToObject(err,'errors')
                console.log(err)
             })
     }
@@ -98,19 +106,22 @@ class  Account extends Component {
         fetch('/api/logout')
         .then(res => res.json())
         .then(result => {
+            console.log(result)
             if(result.message === 'cookie cleared'){
-                document.location = '/'
+                localStorage.removeItem('profile')
+                this.props.isLogged();
+                this.props.saveProfile({})
+                this.props.history.push('/');
+                
             }
         })
     }
 
     render(){
-        let username = JSON.parse(localStorage.getItem('profile')).username;
-        console.log(username)
-        // console.log(this.state.gender)
+
         return(
             <Container fluid={true}>
-                <Navbars  username={username} logout={this.logout}/>
+                <Navbars  username={this.props.profile.username} logout={this.logout}/>
                 <Row className="row-acc" noGutters={true}>
                     <Col sm="12" md="2" className="sidemenu-col">
                       <Sidemenu toggle={this.toggle}/>
@@ -135,5 +146,27 @@ class  Account extends Component {
             </Container>
         )
     }
+
 }
-export default Account
+
+
+
+const mapStateToProps = (state) => {
+    return {
+        profile:state.saveProfile
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        saveProfile: profile => {
+            dispatch(saveProfile(profile))
+        },
+        isLogged:()=> {
+            dispatch(isLogged());
+        }
+    }
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Account);

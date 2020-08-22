@@ -1,7 +1,10 @@
 import React,{Component} from "react";
 import {Container,Row,Col,Label} from "reactstrap";
+import {connect} from "react-redux";
 import {Form,FormGroup,Input,Button} from "reactstrap";
 import Sidemenu from "./Sidemenu";
+import {saveProfile}  from '../action/saveProfile';
+import isLogged from '../action/isLogged';
 import Navbars from "./Navbar";
 import Recepient from "./Recepient";
 import AddPersonForm from './AddPersonForm'
@@ -43,8 +46,13 @@ class SendMessage extends Component {
         fetch('/api/logout')
         .then(res => res.json())
         .then(result => {
+            console.log(result)
             if(result.message === 'cookie cleared'){
-                document.location = '/'
+                localStorage.removeItem('profile')
+                this.props.isLogged();
+                this.props.saveProfile({})
+                this.props.history.push('/');
+                
             }
         })
     }
@@ -151,7 +159,7 @@ class SendMessage extends Component {
         return(
             //messaging form.
             <Container fluid={true}>
-                <Navbars  username={username}   logout={this.logout}/>
+                <Navbars  username={username}   logout={this.logout} />
                 <Row noGutters={true}>
                     <Col sm="12" md="2" className="sidemenu-col">
                         <Sidemenu toggle = {this.toggle}/>
@@ -210,4 +218,22 @@ function MessageForm(props){
     
 }
 
-export default SendMessage
+
+const mapStateToProps = (state) => {
+    return {
+        profile:state.saveProfile
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        saveProfile: profile => {
+            dispatch(saveProfile(profile))
+        },
+        isLogged:()=> {
+            dispatch(isLogged());
+        }
+    }
+}
+
+export default  connect(mapStateToProps,mapDispatchToProps)(SendMessage)

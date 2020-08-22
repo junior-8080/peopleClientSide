@@ -1,10 +1,13 @@
 import React,{Component} from "react";
+import { connect } from 'react-redux'
 import {Container,Row,Col,Alert} from "reactstrap";
 import {Link} from "react-router-dom";
 import Footer from "./Footer";
 import SigninForm from "./Signin";
 import Logo from "./people.jpg";
-import Reset from './Reset'
+import Reset from './Reset';
+import isLogged from '../action/isLogged';
+import {saveProfile} from '../action/saveProfile';
 
 
 
@@ -50,25 +53,13 @@ class Homepage extends Component{
         })
         .then(res => res.json())
         .then(result => {
-            console.log(result)
-            if(result.message){
-            fetch('/api/profile')
-            .then(res => res.json())
-            .then(result => {
-                console.log(data)
-                let profile = {
-                    userId:result.data.user_id,
-                    username:result.data.user_name,
-                    useremail : result.data.user_email
-                }
-                localStorage.setItem('profile',JSON.stringify(profile))
-                window.location = '/account'
-                console.log(profile)
-            })
-            .catch(err=> console.log(err))
+            if(result.message === 'success'){
+                console.log(result.data)
+                this.props.isLogged();
+                this.props.saveProfile(result.data)
+                localStorage.setItem('profile',JSON.stringify(result.data))
             }
             if(result.errors){
-                // let errors = convertArrayToObject(result.errors,'msg')
                 return this.setState({
                     error:result.errors[0].msg
                 })
@@ -79,6 +70,8 @@ class Homepage extends Component{
         })      
     }
     render(){
+        localStorage.setItem('isLogged',false);
+        localStorage.setItem('profile',JSON.stringify({}));
         return(
             <Container fluid={true}>
               <Row noGutters={true} className="row-home">
@@ -106,7 +99,7 @@ class Homepage extends Component{
                          Dont have an account...?<Link to="/signup">&nbsp;Sign me up</Link>
                      </span>
                      <div>
-                         <span className="dntHaveAccount">Forgotton Password...?<Link onClick={this.toggle}>&nbsp;Reset</Link></span>
+                         <span className="dntHaveAccount">Forgotton Password...?<Link onClick={this.toggle} >&nbsp;Reset</Link></span>
                      </div>
                   </Col>
               </Row>
@@ -118,4 +111,17 @@ class Homepage extends Component{
    
 }
 
-export default Homepage
+
+
+  const mapDispatchToProps = dispatch => {
+    return {
+        saveProfile: profile => {
+            dispatch(saveProfile(profile))
+        },
+        isLogged:()=> {
+            dispatch(isLogged());
+        }
+    }
+  }
+
+export default connect(null, mapDispatchToProps)(Homepage);

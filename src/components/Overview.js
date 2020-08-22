@@ -1,13 +1,19 @@
 import React,{Component} from "react"
 import {Container,Row,Col} from "reactstrap"
 import {Card,CardBody,CardTitle,CardText,CardImg} from "reactstrap"
+import {connect} from 'react-redux'
 import Navbars from './Navbar';
 import Sidemenu from "./Sidemenu"
 import image from "./profile2.svg"
 import AddPersonForm from "./AddPersonForm";
 import EditForm from "./EditFrom";
+import {saveProfile}  from '../action/saveProfile';
+import isLogged from "../action/isLogged";
 
 import "../styles/overview.css"
+
+
+
 
 
 
@@ -26,11 +32,17 @@ class Overview extends Component {
         fetch('/api/logout')
         .then(res => res.json())
         .then(result => {
+            console.log(result)
             if(result.message === 'cookie cleared'){
-                document.location = '/'
+                localStorage.removeItem('profile')
+                this.props.isLogged();
+                this.props.saveProfile({})
+                this.props.history.push('/');
+                
             }
         })
     }
+
     componentDidMount(){
         fetch(`/api/getPerson/${this.state.id}`)  
             .then(res => res.json())
@@ -68,7 +80,10 @@ class Overview extends Component {
         })
      }
     render(){
-        let username = JSON.parse(localStorage.getItem('profile')).username;
+        let username = this.props.profile.username;
+        if(!this.props.isLogged){
+            this.props.history.push("/")
+        }
         return(
            <Container fluid={true} className="overview">
                <Navbars username={username} logout={this.logout}/>
@@ -170,4 +185,23 @@ class Overview extends Component {
 
     }
 }
-export default Overview
+
+
+const mapStateToProps = (state) => {
+    return {
+        profile:state.saveProfile
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        saveProfile: profile => {
+            dispatch(saveProfile(profile))
+        },
+        isLogged:()=> {
+            dispatch(isLogged());
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Overview);
