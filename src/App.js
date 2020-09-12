@@ -22,24 +22,28 @@ function App(props) {
         <Redirect to="/account" />
         :
         <Switch>
-          <Route path = "/" exact component = {Home} />
+          <Route path exact = "/" exact component = {Home} />
           <Route path = "/signup" component = {Signup} />
           <Route path = "/signin" component = {Signin} />
+           
         </Switch >
       }
       
         {
-          isLogged ?
+          !isLogged ?
+             <Switch>
+                <Route path = "/reset/:secret"  component = {ResetForm} />  
+               <Redirect to="/" />
+             </Switch>
+              :
           <Switch>
-            <Route path = "/account" component={Account} />
+            <Route path  = "/account" component={Account} />
             <Route path = "/overview/:id" component = {Overview} />
-            <Route path = "/message"  component = {SendMessage} />     
-            <Route path = "/reset/:secret"  component = {ResetForm} />  
+            <Route path = "/message"  component = {SendMessage} />   
           </Switch>
-          :
-          <Redirect to="/" />
+         
         }
-        
+
     </div>
   )
 }

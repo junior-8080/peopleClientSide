@@ -5,6 +5,7 @@ import {Row, Col} from "reactstrap";
 import {Form, Button, FormGroup, Input} from "reactstrap";
 import {Modal,ModalBody,ModalHeader,ModalFooter} from "reactstrap"
 import "../styles/add.css"
+import { connect } from "react-redux";
 
 
 function AddPersonForm(props) {
@@ -55,8 +56,9 @@ function AddPersonForm(props) {
                 
         },
     })
-
+ 
      return (
+           
          <Modal isOpen={props.modal} toggle={props.toggle} className="modal-container">
         
                  <ModalHeader toggle={props.toggle} style={{color:'rgb(9, 9, 112)'}}>
@@ -125,4 +127,8 @@ function AddPersonForm(props) {
     )
 
 }
-export default AddPersonForm
+
+ const mapStateToProps = state => {
+     return {isLogged:state.isLogged}
+ }
+export default connect(mapStateToProps,null) (AddPersonForm)

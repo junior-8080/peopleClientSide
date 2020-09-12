@@ -20,9 +20,10 @@ function ResetForm(props) {
         }),
         onSubmit:values => {
             const data = {
+                secret:props.match.params.secret,
                 password:values.password,
             }
-            props.toggle();
+        
             fetch('/api/resetpassword',{
                 method:'POST',
                 headers:{
@@ -46,13 +47,13 @@ function ResetForm(props) {
                     <Col md="8">
                     <FormGroup>
                         <Label>New-Password:</Label>
-                        <Input type="password" name="password" id="passwordField" placeholder="Enter your email" 
+                        <Input type="password" name="password" id="passwordField" placeholder="Enter new password" 
                         value={formik.values.password} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
                          {formik.touched.email && formik.errors.email?<div className="errors">{formik.errors.email}</div>: null}
                     </FormGroup>
                     <FormGroup>
                         <Label>Confirm-Password:</Label>
-                        <Input type="text" name="confirmPassword" id="confirmField" placeholder="Enter your email" 
+                        <Input type="password" name="confirmPassword" id="confirmField" placeholder="Enter new password" 
                         value={formik.values.confirmPassword} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
                          {formik.touched.confirmPassword && formik.errors.confirmPassword?<div className="errors">{formik.errors.confirmPassword}</div>: null}
                     </FormGroup>

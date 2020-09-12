@@ -50,7 +50,7 @@ class SendMessage extends Component {
             if(result.message === 'cookie cleared'){
                 localStorage.removeItem('profile')
                 this.props.isLogged();
-                this.props.saveProfile({})
+                this.props.saveProfile({});
                 this.props.history.push('/');
                 
             }

@@ -1,6 +1,6 @@
 import React from "react";
 import {Card,CardBody,Button,CardTitle,CardText} from "reactstrap";
-import add from "./add.png";
+import add from "./new.svg";
 
 function NewUser(props) {
     return(
