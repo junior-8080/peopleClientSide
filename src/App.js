@@ -11,6 +11,7 @@ import ResetForm from "./components/ResetForm";
 // import isLogged from './action/isLogged';
 import { connect } from 'react-redux';
 import './App.css';
+import ErrorPath from './components/ErrorPath';
 
 
 function App(props) {
@@ -33,6 +34,7 @@ function App(props) {
           !isLogged ?
              <Switch>
                 <Route path = "/reset/:secret"  component = {ResetForm} />  
+                <Route component={ErrorPath} />
                <Redirect to="/" />
              </Switch>
               :
